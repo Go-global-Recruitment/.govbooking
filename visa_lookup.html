@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Visa Application Lookup with Upload</title>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 20px auto; padding: 0 15px; }
+    input, button { font-size: 1rem; padding: 10px; margin: 5px 0; }
+    #result { margin-top: 20px; background: #f9f9f9; padding: 15px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+
+  <h1>Visa Application Lookup</h1>
+
+  <label for="csvFile">Upload your visa_application_status.csv file:</label><br />
+  <input type="file" id="csvFile" accept=".csv" /><br />
+
+  <input type="text" id="lookupRef" placeholder="Enter Booking Number" disabled />
+  <button id="lookupBtn" disabled>Lookup Booking</button>
+
+  <div id="result"></div>
+
+  <script>
+    let bookings = [];
+
+    // When CSV file is uploaded
+    document.getElementById('csvFile').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          bookings = results.data;
+          if(bookings.length === 0){
+            alert('CSV file is empty or incorrectly formatted.');
+            return;
+          }
+          alert('CSV loaded successfully! You can now search by Booking Number.');
+          document.getElementById('lookupRef').disabled = false;
+          document.getElementById('lookupBtn').disabled = false;
+          document.getElementById('result').innerHTML = '';
+        },
+        error: function(err){
+          alert('Error parsing CSV file: ' + err.message);
+        }
+      });
+    });
+
+    // Lookup booking when button clicked
+    document.getElementById('lookupBtn').addEventListener('click', () => {
+      const bookingNumber = document.getElementById('lookupRef').value.trim();
+      if (!bookingNumber) {
+        alert('Please enter a booking number.');
+        return;
+      }
+
+      const match = bookings.find(row => row['Booking Number'] === bookingNumber);
+
+      if (!match) {
+        document.getElementById('result').innerHTML = '<p><strong>Booking not found.</strong></p>';
+        return;
+      }
+
+      const html = `
+        <h3>Booking Number: ${match['Booking Number']}</h3>
+        <p><strong>Full Name:</strong> ${match['Full Name']}</p>
+        <p><strong>ID:</strong> ${match['ID']}</p>
+        <p><strong>Email:</strong> ${match['Email']}</p>
+        <p><strong>Cellphone:</strong> ${match['Cellphone']}</p>
+        <p><strong>Country:</strong> ${match['Country']}</p>
+        <p><strong>Province/State:</strong> ${match['Province/State']}</p>
+        <p><strong>Office:</strong> ${match['Office']}</p>
+        <p><strong>Appointment Date:</strong> ${match['Appointment Date']}</p>
+        <p><strong>Appointment Time:</strong> ${match['Appointment Time']}</p>
+        <p><strong>Document Type:</strong> ${match['Document Type']}</p>
+        <p><strong>Status:</strong> ${match['Status']}</p>
+      `;
+
+      document.getElementById('result').innerHTML = html;
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Summary</title>
+<style>
+body { font-family: 'Poppins', sans-serif; background:#e0f7fa; margin:0; padding:20px;}
+.container { max-width:950px; margin:0 auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.1);}
+h1,h2 { text-align:center; color:#0a6b3b; }
+table { width:100%; border-collapse: collapse; margin-top:20px; }
+th, td { border:1px solid #dce3ea; padding:10px; text-align:left; }
+th { background:#2a8a55; color:white; }
+.status-Pending { color:orange; font-weight:bold; }
+.status-Submitted { color:green; font-weight:bold; }
+.button-group { text-align:center; margin-top:20px; }
+.button-group button { padding:10px 20px; margin:0 10px; border:none; border-radius:8px; font-weight:600; cursor:pointer; background:#0a6b3b; color:white; transition:0.3s; }
+.button-group button:hover { background:#2a8a55; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Application Summary</h1>
+
+<h2>Personal Information</h2>
+<div id="personalInfo"></div>
+
+<h2>Document Uploads</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Document Type</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="documentsTable"></tbody>
+</table>
+
+<!-- Buttons at the bottom -->
+<div class="button-group">
+  <button id="printBtn">Print Summary</button>
+  <button id="csvBtn">Download CSV</button>
+</div>
+</div>
+
+<script>
+// Get data from localStorage (from visa application form)
+const data = JSON.parse(localStorage.getItem('bookingData'));
+
+if(!data){
+  document.getElementById('personalInfo').innerText = "No booking information found.";
+} else {
+  // Personal Information
+  const personalHTML = `
+    <p><strong>Booking Number:</strong> ${data.booking_number}</p>
+    <p><strong>Full Name:</strong> ${data.forenames} ${data.surname}</p>
+    <p><strong>ID Number:</strong> ${data.id_number}</p>
+    <p><strong>Email:</strong> ${data.email}</p>
+    <p><strong>Cellphone:</strong> ${data.country_code} ${data.cellphone}</p>
+    <p><strong>Country:</strong> ${data.country}</p>
+    <p><strong>Province/State:</strong> ${data.location}</p>
+    <p><strong>Office:</strong> ${data.office}</p>
+    <p><strong>Appointment:</strong> ${data.appointment_date} at ${data.appointment_time}</p>
+  `;
+  document.getElementById('personalInfo').innerHTML = personalHTML;
+
+  // Document Uploads
+  const docs = data.userDocuments || [];
+  const tbody = document.getElementById('documentsTable');
+  tbody.innerHTML = '';
+
+  // Updated document types including your new ones
+  const docTypes = [
+    'Passport',
+    'Visa Form',
+    'ID Copy',
+    'Medical Report',
+    'Flight Booking (Invoice/Receipt)',
+    'Travel Itinerary',
+    'Travel Insurance',
+    'Fingerprint Clearance (Afiswitch)',
+    'Medical Records'
+  ];
+
+  docTypes.forEach(type => {
+    const uploaded = docs.find(d => d.name === type);
+    const status = uploaded ? 'Submitted' : 'Pending';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${type}</td><td class="status-${status}">${status}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// --- Print Button ---
+document.getElementById('printBtn').addEventListener('click', () => {
+  window.print();
+});
+
+// --- CSV Download Button ---
+document.getElementById('csvBtn').addEventListener('click', () => {
+  if(!data) return alert("No data available to export.");
+
+  const docs = data.userDocuments || [];
+  const docTypes = [
+    'Passport',
+    'Visa Form',
+    'ID Copy',
+    'Medical Report',
+    'Flight Booking (Invoice/Receipt)',
+    'Travel Itinerary',
+    'Travel Insurance',
+    'Fingerprint Clearance (Afiswitch)',
+    'Medical Records'
+  ];
+
+  const rows = [];
+  docTypes.forEach(type => {
+    const uploaded = docs.find(d => d.name === type);
+    const status = uploaded ? 'Submitted' : 'Pending';
+    rows.push({
+      "Booking Number": data.booking_number,
+      "ID": data.id_number,
+      "Full Name": `${data.forenames} ${data.surname}`,
+      "Email": data.email,
+      "Cellphone": `${data.country_code} ${data.cellphone}`,
+      "Country": data.country,
+      "Province/State": data.location,
+      "Office": data.office,
+      "Appointment Date": data.appointment_date,
+      "Appointment Time": data.appointment_time,
+      "Document Type": type,
+      "Status": status
+    });
+  });
+
+  const headers = Object.keys(rows[0]).join(",");
+  const csvContent = [headers].concat(rows.map(r => Object.values(r).map(v => `"${v}"`).join(","))).join("\n");
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${data.booking_number}_summary.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+Booking Number,ID,Full Name,Email,Cellphone,Country,Province/State,Office,Appointment Date,Appointment Time,Document Type,Status
+BK1757936173845,8.41E+12,niakshni pillay,nikashnip@gmail.com,+27 0846629870,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Passport,Pending
+BK1757936173845,8.41E+12,niakshni pillay,nikashnip@gmail.com,+27 0846629870,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Visa Form,Pending
+BK1757936173845,8.41E+12,niakshni pillay,nikashnip@gmail.com,+27 0846629870,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,ID Copy,Pending
+BK1757936173845,8.41E+12,niakshni pillay,nikashnip@gmail.com,+27 0846629870,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Medical Report,Pending
+BK1757936173845,8.41E+12,niakshni pillay,nikashnip@gmail.com,+27 0846629870,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Flight Booking (Invoice/Receipt),Pending
+BK1757936173845,8.41E+12,niakshni pillay,nikashnip@gmail.com,+27 0846629870,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Travel Itinerary,Pending
+BK1757936173845,8.41E+12,niakshni pillay,nikashnip@gmail.com,+27 0846629870,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Travel Insurance,Pending
+BK1757936173845,8.41E+12,niakshni pillay,nikashnip@gmail.com,+27 0846629870,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Fingerprint Clearance (Afiswitch),Pending
+BK1757936173845,8.41E+12,niakshni pillay,nikashnip@gmail.com,+27 0846629870,Eswatini,Mbabane,Mbabane Home Affairs,45952,13:00-14:00,Medical Records,Pending
+0,9.99E+02,999,999,999,999,999,999,1902/09/25,999,999,Submitted
+0,9.99E+02,999,999,999,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Passport,Pending
+0,9.99E+02,999,999,999,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Visa Form,Pending
+0,9.99E+02,999,999,999,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,ID Copy,Pending
+0,9.99E+02,999,999,999,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Medical Report,Pending
+0,9.99E+02,999,999,999,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Flight Booking (Invoice/Receipt),Pending
+0,9.99E+02,999,999,999,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Travel Itinerary,Pending
+0,9.99E+02,999,999,999,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Travel Insurance,Pending
+0,9.99E+02,999,999,999,Eswatini,Mbabane,Mbabane Home Affairs,2025/10/22,13:00-14:00,Fingerprint Clearance (Afiswitch),Pending
+0,9.99E+02,999,999,999,Eswatini,Mbabane,Mbabane Home Affairs,45952,13:00-14:00,Medical Records,Pending

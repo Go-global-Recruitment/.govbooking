@@ -1,0 +1,17 @@
+<label for="country">Country</label>
+<select id="country" name="country" onchange="updateProvinces()">
+  <option value="">Select Country</option>
+  <!-- Populate with countries -->
+</select>
+
+<label for="province">Province</label>
+<select id="province" name="province" onchange="updatePostalCodes()">
+  <option value="">Select Province</option>
+  <!-- Populate with provinces based on selected country -->
+</select>
+
+<label for="postal">Postal Code</label>
+<select id="postal" name="postal">
+  <option value="">Select Postal Code</option>
+  <!-- Populate with postal codes based on selected province -->
+</select>

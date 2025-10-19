@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoGlobal Booking - Desktop App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 30px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #1a2a6c;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .content {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .instructions {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .instructions h2 {
+            color: #1a2a6c;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #fdbb2d;
+            font-size: 1.8rem;
+        }
+        
+        .step {
+            margin-bottom: 25px;
+            padding-left: 35px;
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #1a2a6c;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .step h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.3rem;
+        }
+        
+        .preview {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+        
+        .preview h2 {
+            color: #1a2a6c;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #fdbb2d;
+            font-size: 1.8rem;
+        }
+        
+        .app-window {
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 auto 25px;
+            max-width: 450px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .window-header {
+            background: #1a2a6c;
+            color: white;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .window-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .close { background: #ff5f57; }
+        .minimize { background: #ffbd2e; }
+        .maximize { background: #28ca42; }
+        
+        .window-content {
+            padding: 25px;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: white;
+        }
+        
+        .logo {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #1a2a6c;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(26, 42, 108, 0.3);
+        }
+        
+        .btn:hover {
+            background: #fdbb2d;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.95rem;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 18px 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px 8px 0 0;
+            font-size: 0.9rem;
+        }
+        
+        .copy-btn {
+            background: #fdbb2d;
+            color: #333;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: white;
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
+        .feature i {
+            background: #1a2a6c;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-tab {
+            padding: 10px 20px;
+            background: #f1f1f1;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+        }
+
+        .nav-tab.active {
+            background: #1a2a6c;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Convert GoGlobal Booking to Desktop App</h1>
+            <p class="subtitle">Turn your web application into a standalone desktop application</p>
+            <p>Your project: <strong>https://goglobal-recruitment.github.io/.govbooking/</strong></p>
+        </header>
+        
+        <div class="content">
+            <div class="instructions">
+                <h2>Step-by-Step Instructions</h2>
+                
+                <div class="nav-tabs">
+                    <div class="nav-tab active" onclick="switchTab('electron')">Electron</div>
+                    <div class="nav-tab" onclick="switchTab('tauri')">Tauri</div>
+                    <div class="nav-tab" onclick="switchTab('pwa')">PWA</div>
+                </div>
+                
+                <div id="electron-tab" class="tab-content active">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Install Node.js and npm</h3>
+                        <p>Download and install Node.js from the official website, which includes npm.</p>
+                        <a href="https://nodejs.org" target="_blank" class="btn">Download Node.js</a>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Create a new directory for your desktop app</h3>
+                        <p>Open your terminal and run:</p>
+                        <div class="code-header">
+                            <span>Terminal Command</span>
+                            <button class="copy-btn" onclick="copyCode('code1')">Copy</button>
+                        </div>
+                        <pre id="code1">mkdir govbooking-desktop
+cd govbooking-desktop</pre>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Initialize your project</h3>
+                        <p>Run the following command to create a package.json file:</p>
+                        <div class="code-header">
+                            <span>Terminal Command</span>
+                            <button class="copy-btn" onclick="copyCode('code2')">Copy</button>
+                        </div>
+                        <pre id="code2">npm init -y</pre>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Install Electron</h3>
+                        <p>Install Electron as a development dependency:</p>
+                        <div class="code-header">
+                            <span>Terminal Command</span>
+                            <button class="copy-btn" onclick="copyCode('code3')">Copy</button>
+                        </div>
+                        <pre id="code3">npm install electron --save-dev</pre>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <h3>Create main.js</h3>
+                        <p>Create a file named <code>main.js</code> with the following content:</p>
+                        <div class="code-header">
+                            <span>main.js</span>
+                            <button class="copy-btn" onclick="copyCode('code4')">Copy</button>
+                        </div>
+                        <pre id="code4">const { app, BrowserWindow } = require('electron');
+const path = require('path');
+
+function createWindow() {
+  const mainWindow = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    },
+    icon: path.join(__dirname, 'icon.png') // optional
+  });
+
+  // Load your GoGlobal Recruitment booking website
+  mainWindow.loadURL('https://goglobal-recruitment.github.io/.govbooking/');
+}
+
+app.whenReady().then(createWindow);
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
+});</pre>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <h3>Update package.json</h3>
+                        <p>Add a start script to your package.json:</p>
+                        <div class="code-header">
+                            <span>package.json</span>
+                            <button class="copy-btn" onclick="copyCode('code5')">Copy</button>
+                        </div>
+                        <pre id="code5">"scripts": {
+  "start": "electron .",
+  "build": "electron-builder"
+}</pre>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">7</div>
+                        <h3>Run your desktop app</h3>
+                        <p>Start your application with:</p>
+                        <div class="code-header">
+                            <span>Terminal Command</span>
+                            <button class="copy-btn" onclick="copyCode('code6')">Copy</button>
+                        </div>
+                        <pre id="code6">npm start</pre>
+                    </div>
+                </div>
+                
+                <div id="tauri-tab" class="tab-content">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Install Rust</h3>
+                        <p>Install Rust using rustup:</p>
+                        <div class="code-header">
+                            <span>Terminal Command</span>
+                            <button class="copy-btn" onclick="copyCode('code7')">Copy</button>
+                        </div>
+                        <pre id="code7">curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</pre>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Install Tauri prerequisites</h3>
+                        <p>Follow the platform-specific instructions:</p>
+                        <a href="https://tauri.app/v1/guides/getting-started/prerequisites" target="_blank" class="btn">View Prerequisites</a>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Create a Tauri app</h3>
+                        <p>Create a new Tauri project:</p>
+                        <div class="code-header">
+                            <span>Terminal Command</span>
+                            <button class="copy-btn" onclick="copyCode('code8')">Copy</button>
+                        </div>
+                        <pre id="code8">npm create tauri-app@latest govbooking-desktop
+cd govbooking-desktop</pre>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Configure Tauri</h3>
+                        <p>Update the tauri.conf.json file to load your web app:</p>
+                        <div class="code-header">
+                            <span>tauri.conf.json</span>
+                            <button class="copy-btn" onclick="copyCode('code9')">Copy</button>
+                        </div>
+                        <pre id="code9">"windows": [
+  {
+    "title": "GoGlobal Booking",
+    "width": 1200,
+    "height": 800,
+    "resizable": true,
+    "fullscreen": false,
+    "url": "https://goglobal-recruitment.github.io/.govbooking/"
+  }
+]</pre>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <h3>Run your Tauri app</h3>
+                        <p>Start your application with:</p>
+                        <div class="code-header">
+                            <span>Terminal Command</span>
+                            <button class="copy-btn" onclick="copyCode('code10')">Copy</button>
+                        </div>
+                        <pre id="code10">npm run tauri dev</pre>
+                    </div>
+                </div>
+                
+                <div id="pwa-tab" class="tab-content">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Create a Manifest File</h3>
+                        <p>Create a manifest.json file in your project:</p>
+                        <div class="code-header">
+                            <span>manifest.json</span>
+                            <button class="copy-btn" onclick="copyCode('code11')">Copy</button>
+                        </div>
+                        <pre id="code11">{
+  "name": "GoGlobal Booking",
+  "short_name": "GovBooking",
+  "description": "GoGlobal Recruitment Booking System",
+  "start_url": "https://goglobal-recruitment.github.io/.govbooking/",
+  "display": "standalone",
+  "background_color": "#1a2a6c",
+  "theme_color": "#fdbb2d",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}</pre>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Add to Home Screen</h3>
+                        <p>Users can install your PWA by selecting "Add to Home Screen" in their browser.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Service Worker (Optional)</h3>
+                        <p>For offline functionality, register a service worker:</p>
+                        <div class="code-header">
+                            <span>sw.js</span>
+                            <button class="copy-btn" onclick="copyCode('code12')">Copy</button>
+                        </div>
+                        <pre id="code12">self.addEventListener('install', (event) => {
+  console.log('Service Worker installing.');
+});
+
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
+});</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preview">
+                <h2>Desktop App Preview</h2>
+                
+                <div class="app-window">
+                    <div class="window-header">
+                        <div>GoGlobal Booking</div>
+                        <div class="window-controls">
+                            <div class="control close" onclick="simulateAction('close')"></div>
+                            <div class="control minimize" onclick="simulateAction('minimize')"></div>
+                            <div class="control maximize" onclick="simulateAction('maximize')"></div>
+                        </div>
+                    </div>
+                    <div class="window-content">
+                        <div class="logo">GoGlobal<br>Booking<br>System</div>
+                        <h3>GoGlobal Recruitment Booking</h3>
+                        <p>Your web app running as a desktop application</p>
+                        <a href="#" class="btn" id="launch-btn">Launch App</a>
+                    </div>
+                </div>
+                
+                <h3>Packaging for Distribution</h3>
+                <p>To create distributable packages with Electron:</p>
+                <div class="code-header">
+                    <span>Terminal Command</span>
+                    <button class="copy-btn" onclick="copyCode('code13')">Copy</button>
+                </div>
+                <pre id="code13">npm install electron-builder --save-dev</pre>
+                <p>Then add build scripts to your package.json and run:</p>
+                <div class="code-header">
+                    <span>Terminal Command</span>
+                    <button class="copy-btn" onclick="copyCode('code14')">Copy</button>
+                </div>
+                <pre id="code14">npm run build</pre>
+                
+                <div class="features">
+                    <h3>Desktop App Benefits</h3>
+                    <div class="feature">
+                        <i class="fas fa-window-restore"></i>
+                        <span>Runs in its own window, separate from browser</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-desktop"></i>
+                        <span>Desktop shortcut and taskbar integration</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <span>Potential for better performance</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-cogs"></i>
+                        <span>Access to system resources (if needed)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 GoGlobal Recruitment Desktop App | Choose the method that works best for your needs</p>
+            <p>Electron for full desktop integration, Tauri for lightweight apps, or PWA for simplicity</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Simple animation for the preview app window
+        document.addEventListener('DOMContentLoaded', function() {
+            const appWindow = document.querySelector('.app-window');
+            setTimeout(() => {
+                appWindow.style.transform = 'scale(1.03)';
+                setTimeout(() => {
+                    appWindow.style.transform = 'scale(1)';
+                }, 200);
+            }, 1000);
+            
+            // Button effect
+            const btn = document.getElementById('launch-btn');
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Open the actual GoGlobal booking site in a new tab
+                window.open('https://goglobal-recruitment.github.io/.govbooking/', '_blank');
+                
+                // Visual feedback
+                btn.textContent = 'Opening...';
+                setTimeout(() => {
+                    btn.textContent = 'Launch App';
+                }, 1500);
+            });
+        });
+        
+        // Copy code function
+        function copyCode(id) {
+            const codeElement = document.getElementById(id);
+            const textArea = document.createElement('textarea');
+            textArea.value = codeElement.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            // Visual feedback
+            const copyBtn = event.target;
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => {
+                copyBtn.textContent = 'Copy';
+            }, 2000);
+        }
+        
+        // Switch tabs
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Deactivate all tab buttons
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Activate selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // Simulate window actions
+        function simulateAction(action) {
+            const appWindow = document.querySelector('.app-window');
+            
+            if (action === 'close') {
+                appWindow.style.transform = 'scale(0.9)';
+                appWindow.style.opacity = '0';
+                setTimeout(() => {
+                    alert('In the actual app, this would close the window');
+                    appWindow.style.transform = 'scale(1)';
+                    appWindow.style.opacity = '1';
+                }, 300);
+            } else if (action === 'minimize') {
+                appWindow.style.transform = 'scale(0.95) translateY(30px)';
+                setTimeout(() => {
+                    appWindow.style.transform = 'scale(1) translateY(0)';
+                }, 300);
+            } else if (action === 'maximize') {
+                if (appWindow.style.width === '100%') {
+                    appWindow.style.width = '';
+                    appWindow.style.height = '';
+                    appWindow.style.maxWidth = '450px';
+                } else {
+                    appWindow.style.width = '100%';
+                    appWindow.style.height = '100%';
+                    appWindow.style.maxWidth = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

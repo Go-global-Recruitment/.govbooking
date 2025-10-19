@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visa Application</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+:root {
+  --card: #ffffff;
+  --muted: #6b7a8a;
+  --accent: #0a6b3b;
+  --accent-2: #2a8a55;
+  --background: #e0f7fa;
+  --font-family: 'Poppins', sans-serif;
+  --border-light: #dce3ea;
+  --radius: 12px;
+  --shadow: rgba(0,0,0,0.1);
+}
+body {
+  font-family: var(--font-family);
+  background-color: var(--background);
+  margin:0;
+  padding:20px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+.container {
+  width:100%;
+  max-width:950px;
+  padding:2.5rem 3rem;
+  background-color:var(--card);
+  box-shadow:0 8px 20px var(--shadow);
+  border-radius:var(--radius);
+}
+h1 { text-align:center; font-size:2rem; color:var(--accent); margin-bottom:1rem; }
+h2 { font-size:1.4rem; color:var(--accent-2); margin-bottom:0.75rem; }
+.section-card {
+  background-color:#f8fbff;
+  border:1px solid var(--border-light);
+  border-radius:var(--radius);
+  padding:20px;
+  margin-bottom:20px;
+}
+.field-row {
+  display:flex;
+  align-items:center;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+.field-row label {
+  width:150px;
+  font-weight:600;
+  margin-right:10px;
+}
+.field-row input, .field-row select, .field-row textarea {
+  flex:1;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:1rem;
+  background:#fafafa;
+}
+.field-row input:disabled { background:#eee; color:#555; }
+.buttons {
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+.buttons button {
+  padding:14px;
+  font-size:1rem;
+  font-weight:600;
+  border:none;
+  border-radius:8px;
+  flex:1 1 48%;
+  cursor:pointer;
+  transition: background 0.3s ease;
+  background-color: var(--accent);
+  color:white;
+}
+.buttons button:hover { background-color:var(--accent-2); }
+@media(max-width:768px){
+  .field-row { flex-direction:column; align-items:flex-start; }
+  .field-row label { width:100%; margin-bottom:5px; }
+  .buttons { flex-direction:column; }
+  .buttons button{width:100%;}
+}
+.hidden { display:none; }
+</style>
+</head>
+<body>
+<main class="container">
+<h1>Visa Application Form</h1>
+
+<!-- Personal Details -->
+<div class="section-card">
+  <h2>Personal Details</h2>
+  <div class="field-row"><label>Booking Number</label><input id="booking_number" disabled></div>
+  <div class="field-row"><label>ID Number</label><input id="id_number" disabled></div>
+  <div class="field-row"><label>Full Forenames</label><input id="forenames" disabled></div>
+  <div class="field-row"><label>Surname</label><input id="surname" disabled></div>
+  <div class="field-row"><label>Email</label><input id="email" disabled></div>
+  <div class="field-row"><label>Cellphone</label><input id="cellphone_full" disabled></div>
+  <div class="field-row"><label>Country</label><input id="country" disabled></div>
+  <div class="field-row"><label>Province/State</label><input id="location" disabled></div>
+  <div class="field-row"><label>Office</label><input id="office" disabled></div>
+  <div class="field-row"><label>Appointment Date</label><input id="appointment_date" disabled></div>
+  <div class="field-row"><label>Appointment Time</label><input id="appointment_time" disabled></div>
+</div>
+
+<!-- Download Documents -->
+<div class="section-card">
+  <h2>Download Documents</h2>
+  <div class="buttons">
+    <a href="visa.pdf" download><button type="button">Download Main Visa PDF</button></a>
+    <a href="medical.pdf" download><button type="button">Download Medical PDF</button></a>
+    <a href="home-affairs-service-charter.pdf" download><button type="button">Download Service Charter</button></a>
+  </div>
+</div>
+
+<!-- User Passport Details -->
+<div class="section-card">
+  <h2>Your Passport Details</h2>
+  <div class="field-row">
+    <label>Do you have a passport?</label>
+    <select id="user_passport_yesno">
+      <option value="No">No</option>
+      <option value="Yes">Yes</option>
+    </select>
+  </div>
+  <div id="user_passport_yes" class="hidden">
+    <div class="field-row"><label>Passport Number</label><input id="user_passport_number"></div>
+    <div class="field-row"><label>Expiry Date</label><input type="date" id="user_passport_expiry"></div>
+    <div class="field-row"><label>Upload Passport</label><input type="file" id="user_passport_file"></div>
+  </div>
+  <div id="user_passport_no" class="hidden">
+    <div class="field-row"><label>Would you like to apply for a passport?</label>
+      <select id="user_apply_passport">
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+      </select>
+    </div>
+    <div id="user_apply_fields" class="hidden">
+      <div class="field-row"><label>Intended Issue Date</label><input type="date" id="user_intended_date"></div>
+      <div class="field-row"><label>Upload Proof</label><input type="file" id="user_proof_file"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Spouse Details -->
+<div class="section-card">
+  <h2>Spouse Details</h2>
+  <div class="field-row">
+    <label>Include Spouse?</label>
+    <select id="includeSpouse">
+      <option value="No">No</option>
+      <option value="Yes">Yes</option>
+    </select>
+  </div>
+  <div id="spouseFields" class="hidden">
+    <div class="field-row"><label>Full Name</label><input id="spouse_name"></div>
+    <div class="field-row"><label>ID/Passport Number</label><input id="spouse_id"></div>
+    <div class="field-row">
+      <label>Do you have a passport?</label>
+      <select id="spouse_passport_yesno">
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+      </select>
+    </div>
+    <div id="spouse_passport_yes" class="hidden">
+      <div class="field-row"><label>Passport Number</label><input id="spouse_passport_number"></div>
+      <div class="field-row"><label>Expiry Date</label><input type="date" id="spouse_passport_expiry"></div>
+      <div class="field-row"><label>Upload Passport</label><input type="file" id="spouse_passport_file"></div>
+    </div>
+    <div id="spouse_passport_no" class="hidden">
+      <div class="field-row"><label>Would you like to apply for a passport?</label>
+        <select id="spouse_apply_passport">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </div>
+      <div id="spouse_apply_fields" class="hidden">
+        <div class="field-row"><label>Intended Issue Date</label><input type="date" id="spouse_intended_date"></div>
+        <div class="field-row"><label>Upload Proof</label><input type="file" id="spouse_proof_file"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Children Details -->
+<div class="section-card">
+  <h2>Children Details</h2>
+  <div class="field-row">
+    <label>Include Children?</label>
+    <select id="includeChildren">
+      <option value="No">No</option>
+      <option value="Yes">Yes</option>
+    </select>
+  </div>
+  <div id="childrenFields" class="hidden">
+    <div class="field-row">
+      <label>Number of Children (0-18 yrs)</label>
+      <select id="num_children">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    <div id="childrenContainer"></div>
+  </div>
+</div>
+
+<!-- Upload Documentation -->
+<div class="section-card">
+  <h2>Upload Documentation</h2>
+  <div class="field-row"><label>Flight Booking (Invoice/Receipt)</label><input type="file" id="flight_invoice"></div>
+  <div class="field-row"><label>Travel Itinerary</label><input type="file" id="travel_itinerary"></div>
+  <div class="field-row"><label>Travel Insurance</label><input type="file" id="travel_insurance"></div>
+  <div class="field-row"><label>Fingerprint Clearance (Afiswitch)</label><input type="file" id="fingerprint_clearance"></div>
+  <div class="field-row"><label>Medical Records</label><input type="file" id="medical_records"></div>
+</div>
+
+<div class="buttons">
+  <button type="button" onclick="submitVisaApplication()">Submit Application</button>
+</div>
+</main>
+
+<script>
+// --- Pull summary data ---
+window.onload = function() {
+  const data = JSON.parse(localStorage.getItem("bookingData"));
+  if(data){
+    document.getElementById("booking_number").value = data.booking_number || "";
+    document.getElementById("id_number").value = data.id_number || "";
+    document.getElementById("forenames").value = data.forenames || "";
+    document.getElementById("surname").value = data.surname || "";
+    document.getElementById("email").value = data.email || "";
+    document.getElementById("cellphone_full").value = (data.country_code||"")+" "+(data.cellphone||"");
+    document.getElementById("country").value = data.country || "";
+    document.getElementById("location").value = data.location || "";
+    document.getElementById("office").value = data.office || "";
+    document.getElementById("appointment_date").value = data.appointment_date || "";
+    document.getElementById("appointment_time").value = data.appointment_time || "";
+  }
+};
+
+// --- User passport toggles ---
+document.getElementById('user_passport_yesno').addEventListener('change', function(){
+  document.getElementById('user_passport_yes').classList.toggle('hidden', this.value!=='Yes');
+  document.getElementById('user_passport_no').classList.toggle('hidden', this.value!=='No');
+});
+document.getElementById('user_apply_passport').addEventListener('change', function(){
+  document.getElementById('user_apply_fields').classList.toggle('hidden', this.value!=='Yes');
+});
+
+// --- Spouse toggles ---
+document.getElementById('includeSpouse').addEventListener('change', function(){
+  document.getElementById('spouseFields').classList.toggle('hidden', this.value!=='Yes');
+});
+document.getElementById('spouse_passport_yesno').addEventListener('change', function(){
+  document.getElementById('spouse_passport_yes').classList.toggle('hidden', this.value!=='Yes');
+  document.getElementById('spouse_passport_no').classList.toggle('hidden', this.value!=='No');
+});
+document.getElementById('spouse_apply_passport').addEventListener('change', function(){
+  document.getElementById('spouse_apply_fields').classList.toggle('hidden', this.value!=='Yes');
+});
+
+// --- Children toggles ---
+document.getElementById('includeChildren').addEventListener('change', function(){
+  document.getElementById('childrenFields').classList.toggle('hidden', this.value!=='Yes');
+});
+
+document.getElementById('num_children').addEventListener('change', function(){
+  const container = document.getElementById('childrenContainer');
+  container.innerHTML='';
+  const count = parseInt(this.value);
+  for(let i=1;i<=count;i++){
+    const childDiv = document.createElement('div');
+    childDiv.classList.add('section-card');
+    childDiv.innerHTML=`
+      <h3>Child ${i}</h3>
+      <div class="field-row"><label>Full Name</label><input id="child${i}_name"></div>
+      <div class="field-row"><label>ID/Passport Number</label><input id="child${i}_id"></div>
+      <div class="field-row">
+        <label>Do you have a passport?</label>
+        <select id="child${i}_passport_yesno">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </div>
+      <div id="child${i}_passport_yes" class="hidden">
+        <div class="field-row"><label>Passport Number</label><input id="child${i}_passport_number"></div>
+        <div class="field-row"><label>Expiry Date</label><input type="date" id="child${i}_passport_expiry"></div>
+        <div class="field-row"><label>Upload Passport</label><input type="file" id="child${i}_passport_file"></div>
+      </div>
+      <div id="child${i}_passport_no" class="hidden">
+        <div class="field-row"><label>Would you like to apply for a passport?</label>
+          <select id="child${i}_apply_passport">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+        </div>
+        <div id="child${i}_apply_fields" class="hidden">
+          <div class="field-row"><label>Intended Issue Date</label><input type="date" id="child${i}_intended_date"></div>
+          <div class="field-row"><label>Upload Proof</label><input type="file" id="child${i}_proof_file"></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(childDiv);
+
+    // Attach dynamic event listeners
+    document.getElementById(`child${i}_passport_yesno`).addEventListener('change', function(){
+      document.getElementById(`child${i}_passport_yes`).classList.toggle('hidden', this.value!=='Yes');
+      document.getElementById(`child${i}_passport_no`).classList.toggle('hidden', this.value!=='No');
+    });
+    document.getElementById(`child${i}_apply_passport`).addEventListener('change', function(){
+      document.getElementById(`child${i}_apply_fields`).classList.toggle('hidden', this.value!=='Yes');
+    });
+  }
+});
+
+// --- Submit function (fixed) ---
+function submitVisaApplication() {
+  const userData = {
+    booking_number: document.getElementById("booking_number").value,
+    id_number: document.getElementById("id_number").value,
+    forenames: document.getElementById("forenames").value,
+    surname: document.getElementById("surname").value,
+    email: document.getElementById("email").value,
+    cellphone_full: document.getElementById("cellphone_full").value,
+    country: document.getElementById("country").value,
+    location: document.getElementById("location").value,
+    office: document.getElementById("office").value,
+    appointment_date: document.getElementById("appointment_date").value,
+    appointment_time: document.getElementById("appointment_time").value
+  };
+
+  const userDocuments = [
+    { name: "Flight Invoice", status: document.getElementById("flight_invoice")?.files.length > 0 ? "Pending" : "No Upload" },
+    { name: "Travel Itinerary", status: document.getElementById("travel_itinerary")?.files.length > 0 ? "Pending" : "No Upload" },
+    { name: "Travel Insurance", status: document.getElementById("travel_insurance")?.files.length > 0 ? "Pending" : "No Upload" },
+    { name: "Fingerprint Clearance", status: document.getElementById("fingerprint_clearance")?.files.length > 0 ? "Pending" : "No Upload" },
+    { name: "Medical Records", status: document.getElementById("medical_records")?.files.length > 0 ? "Pending" : "No Upload" }
+  ];
+
+  const spouseDocuments = [];
+  if(document.getElementById("includeSpouse")?.value === "Yes") {
+    spouseDocuments.push({ name: "Passport", status: document.getElementById("spouse_passport_file")?.files.length > 0 ? "Pending" : "No Upload" });
+    spouseDocuments.push({ name: "Passport Application Proof", status: document.getElementById("spouse_proof_file")?.files.length > 0 ? "Pending" : "No Upload" });
+  }
+
+  const childrenDocuments = [];
+  const numChildren = parseInt(document.getElementById("num_children")?.value || 0);
+  for(let i=1;i<=numChildren;i++){
+    const childDocs = [
+      { name: "Passport", status: document.getElementById(`child${i}_passport_file`)?.files.length > 0 ? "Pending" : "No Upload" },
+      { name: "Passport Application Proof", status: document.getElementById(`child${i}_proof_file`)?.files.length > 0 ? "Pending" : "No Upload" }
+    ];
+    const childName = document.getElementById(`child${i}_name`)?.value || `Child ${i}`;
+    childrenDocuments.push({ name: childName, documents: childDocs });
+  }
+
+  const spouseName = document.getElementById("spouse_name")?.value || "";
+
+  const visaApplication = {
+    ...userData,
+    userDocuments,
+    spouseDocuments,
+    spouse_name: spouseName,
+    childrenDocuments
+  };
+
+  localStorage.setItem('visaApplication', JSON.stringify(visaApplication));
+  window.location.href = "final_summary.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+Booking Number,ID,Full Name,Email,Cellphone,Country,Province/State,Office,Appointment Date,Appointment Time,Document Type,Status
+GB-20250901-0001,1234567890123,John Smith,john@example.com,1234567890,Eswatini,Hhohho,Manzini,2025-10-01,09:00,Passport,Approved
+GB-20250901-0002,9876543210987,Jane Doe,jane@example.com,0987654321,Eswatini,Lubombo,Mbabane,2025-10-02,10:30,Visa Application,Pending
+GB-20250901-0003,1122334455667,Alice Ngwenya,alice@domain.com,0712345678,Eswatini,Manzini,Hhohho,2025-10-03,11:15,Work Permit,Rejected

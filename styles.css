@@ -1,0 +1,92 @@
+:root {
+  --card: #ffffff;
+  --muted: #666;
+  --accent: #0a6b3b;
+  --accent-2: #2a8a55;
+  --danger: #c23;
+  --transition: 0.3s ease-in-out;
+  --font-primary: 'Poppins', sans-serif;
+  --font-secondary: 'Arial', sans-serif;
+  --max-width: 1200px;
+  --nav-height: 60px;
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: var(--font-primary);
+  color: #222;
+  min-height: 100vh;
+  height: 100%;
+  scroll-behavior: smooth;
+  line-height: 1.6;
+  overflow-x: hidden;
+  background: var(--background, #e0f7fa);
+}
+
+/* Background */
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Main container */
+main.container {
+  flex: 1;
+  max-width: 700px;
+  margin: 2rem auto 3rem;
+  padding: 2rem;
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 6px 22px rgba(15, 23, 42, 0.08);
+  position: relative;
+  animation: slideUp 0.8s ease forwards;
+  z-index: 10;
+}
+
+/* Watermark images inside main */
+main.container .watermark-left,
+main.container .watermark-right {
+  position: fixed; /* Fixed position so watermarks stay while scrolling */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 250px;      /* Adjust size */
+  height: 300px;     /* Adjust size */
+  opacity: 0.06;     /* Subtle transparency */
+  pointer-events: none; /* Ignore clicks */
+  z-index: 1;        /* Behind main content */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+main.container .watermark-left {
+  left: 20px;  /* Distance from left edge */
+  background-image: url('coat-of-arms.png'); /* Your coat of arms image */
+}
+
+main.container .watermark-right {
+  right: 20px; /* Distance from right edge */
+  background-image: url('flag.png'); /* Your flag image */
+}
+
+/* Rest of your styles here (nav-bar, header, footer, forms, etc.) */
+/* Keep your existing CSS unchanged */
+
+/* ... */
+

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Watermark Background -->
+  <div class="watermark"></div>
+
+  <!-- Booking Form -->
+  <div class="booking-container animate-fade">
+    <h1 class="animate-slide">Book an Appointment</h1>
+
+    <!-- Booking Form -->
+    <form id="bookingForm" novalidate>
+      <label for="name">Full Name *</label>
+      <input type="text" id="name" name="name" required pattern="[A-Za-z\s]+" placeholder="John Doe">
+
+      <label for="email">Email *</label>
+      <input type="email" id="email" name="email" required placeholder="example@gov.com">
+
+      <label for="phone">Phone Number *</label>
+      <input type="tel" id="phone" name="phone" required pattern="[0-9]{8,15}" placeholder="771234567">
+
+      <label for="date">Select Date *</label>
+      <input type="date" id="date" name="date" required min="2025-10-28" max="2026-10-28">
+
+      <label for="time">Select Time *</label>
+      <select id="time" name="time" required>
+        <option value="">-- Select a time slot --</option>
+        <option value="08:00-09:00">08:00 - 09:00</option>
+        <option value="09:00-10:00">09:00 - 10:00</option>
+        <option value="10:00-11:00">10:00 - 11:00</option>
+        <option value="11:00-12:00">11:00 - 12:00</option>
+        <option value="12:00-13:00">12:00 - 13:00</option>
+        <option value="13:00-14:00">13:00 - 14:00</option>
+        <option value="14:00-15:00">14:00 - 15:00</option>
+        <option value="15:00-16:00">15:00 - 16:00</option>
+      </select>
+
+      <div class="button-group">
+        <button type="button" id="authButton" class="btn-auth">Authenticate</button>
+        <button type="submit" id="submitButton" disabled class="btn-submit">Submit</button>
+      </div>
+    </form>
+
+    <!-- Hidden Confirmation Screen -->
+    <div id="confirmationScreen" style="display:none;">
+      <h2>Booking Confirmation</h2>
+      <p id="bookingSummary"></p>
+      <button id="savePDF">Save as PDF</button>
+      <button id="sendEmail">Send via Email</button>
+      <button onclick="location.reload()">Back to Form</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="booking.js"></script>
+</body>
+</html>

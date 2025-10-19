@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visa Application Admin Dashboard</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --card: #ffffff;
+  --accent: #0a6b3b;
+  --accent-2: #2a8a55;
+  --background: #e0f7fa;
+  --font-family: 'Poppins', sans-serif;
+  --border-light: #dce3ea;
+  --radius: 12px;
+  --shadow: rgba(0,0,0,0.1);
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background);
+  margin:0;
+  padding:20px;
+}
+
+.container {
+  max-width:1200px;
+  margin:0 auto;
+  background-color: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: 0 8px 20px var(--shadow);
+}
+
+h1 { text-align:center; color:var(--accent); margin-bottom:20px; }
+
+table {
+  width:100%;
+  border-collapse: collapse;
+  margin-bottom:20px;
+}
+th, td {
+  border:1px solid var(--border-light);
+  padding:8px;
+  text-align:left;
+  font-size:0.95rem;
+}
+th { background-color:#f1f1f1; }
+
+.status-btn {
+  padding:6px 12px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  color:white;
+  margin-right:5px;
+}
+.accept { background-color: var(--accent); }
+.decline { background-color: #d9534f; }
+
+.download-btn {
+  padding:8px 16px;
+  background-color: var(--accent-2);
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.hidden { display:none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Visa Application Admin Dashboard</h1>
+
+  <!-- CSV Upload -->
+  <div style="margin-bottom:15px;">
+    <label>Upload Applications CSV: </label>
+    <input type="file" id="csvUpload" accept=".csv">
+  </div>
+
+  <!-- Download CSV Button -->
+  <div style="margin-bottom:15px;">
+    <button class="download-btn" id="downloadCsv">Download CSV</button>
+  </div>
+
+  <table id="adminTable">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Document</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <!-- Rows will be injected here -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+// Parse CSV to Array
+function parseCSV(text){
+  const rows = text.trim().split('\n');
+  const headers = rows[0].split(',');
+  return rows.slice(1).map(r => {
+    const cols = r.split(',');
+    return {
+      type: cols[0].trim(),
+      name: cols[1].trim(),
+      document: cols[2].trim(),
+      status: cols[3].trim() || 'Pending'
+    };
+  });
+}
+
+// Render Table
+function renderTable(data){
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+  data.forEach((item,index)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${item.type}</td>
+      <td>${item.name}</td>
+      <td>${item.document}</td>
+      <td class="status-${item.status.toLowerCase()}">${item.status}</td>
+      <td>
+        <button class="status-btn accept">Accept</button>
+        <button class="status-btn decline">Decline</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+
+    // Accept button
+    tr.querySelector('.accept').addEventListener('click',()=>{
+      item.status='Accepted';
+      tr.querySelector('td:nth-child(4)').textContent='Accepted';
+      localStorage.setItem('adminData', JSON.stringify(data));
+    });
+    // Decline button
+    tr.querySelector('.decline').addEventListener('click',()=>{
+      item.status='Declined';
+      tr.querySelector('td:nth-child(4)').textContent='Declined';
+      localStorage.setItem('adminData', JSON.stringify(data));
+    });
+  });
+}
+
+// CSV Upload
+document.getElementById('csvUpload').addEventListener('change', function(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt){
+    const csvText = evt.target.result;
+    const data = parseCSV(csvText);
+    localStorage.setItem('adminData', JSON.stringify(data));
+    renderTable(data);
+  };
+  reader.readAsText(file);
+});
+
+// Download CSV
+document.getElementById('downloadCsv').addEventListener('click',()=>{
+  const data = JSON.parse(localStorage.getItem('adminData')) || [];
+  if(data.length===0){ alert('No data to download'); return; }
+  let csv = 'type,name,document,status\n';
+  data.forEach(d=>{ csv+=`${d.type},${d.name},${d.document},${d.status}\n`; });
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'visa_uploads.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+// Load from localStorage on page load
+window.onload = function(){
+  const savedData = JSON.parse(localStorage.getItem('adminData')) || [];
+  renderTable(savedData);
+}
+</script>
+</body>
+</html>

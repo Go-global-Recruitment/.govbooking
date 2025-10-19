@@ -1,0 +1,6 @@
+visa-app/
+├─ server.js
+├─ submissions.json   (leave empty for now)
+├─ public/
+│  ├─ index.html
+│  └─ admin.html

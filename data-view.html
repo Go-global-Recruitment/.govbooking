@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSV Data with Upload Status</title>
+<style>
+  body { font-family: 'Poppins', sans-serif; background: #f0f0f0; padding: 20px; }
+  table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  th { background-color: #007acc; color: white; }
+  .submitted { color: green; font-weight: bold; }
+  .pending { color: red; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>All User Data & Upload Status</h1>
+<table id="csvTable">
+  <thead>
+    <tr id="csvHeader"></tr>
+  </thead>
+  <tbody id="csvBody"></tbody>
+</table>
+
+<script>
+async function loadCSV() {
+  try {
+    const response = await fetch('CSV.csv'); // path to your main CSV
+    const text = await response.text();
+    const rows = text.split('\n').filter(row => row.trim() !== '');
+    const tableHeader = document.getElementById('csvHeader');
+    const tableBody = document.getElementById('csvBody');
+
+    // Create header
+    const headers = rows[0].split(',');
+    headers.forEach(header => {
+      const th = document.createElement('th');
+      th.textContent = header;
+      tableHeader.appendChild(th);
+    });
+
+    // Create table rows
+    rows.slice(1).forEach(row => {
+      const tr = document.createElement('tr');
+      const cells = row.split(',');
+
+      cells.forEach((cell, index) => {
+        const td = document.createElement('td');
+
+        // Check if this column is an upload column (based on column name)
+        if (headers[index].toLowerCase().includes('upload') || headers[index].toLowerCase().includes('document')) {
+          td.textContent = cell.trim() ? 'Submitted' : 'Pending';
+          td.className = cell.trim() ? 'submitted' : 'pending';
+        } else {
+          td.textContent = cell;
+        }
+
+        tr.appendChild(td);
+      });
+
+      tableBody.appendChild(tr);
+    });
+
+  } catch (error) {
+    console.error('Error loading CSV:', error);
+  }
+}
+
+loadCSV();
+</script>
+
+</body>
+</html>
