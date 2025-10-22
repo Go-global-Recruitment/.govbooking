@@ -243,8 +243,8 @@ function updateOffices(){
 }
 
 // --- Datepicker ---
-const disabledDateRanges=[{from:"2025-09-01",to:"2025-11-16"}];
-const publicHolidays=["2025-09-24","2025-10-15","2025-10-23"];
+const disabledDateRanges=[{from:"2025-01-01",to:"2025-11-16"}];
+const publicHolidays=["2025-09-24","2025-10-15","2025-12-30"];
 function disableDates(date){
   const d = date.toISOString().split('T')[0];
   for(const r of disabledDateRanges) if(d>=r.from && d<=r.to) return true;
@@ -303,4 +303,5 @@ bookingForm.addEventListener("submit", function(e){
 </script>
 </body>
 </html>
+
 
