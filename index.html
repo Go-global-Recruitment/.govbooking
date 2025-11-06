@@ -138,16 +138,18 @@ select:disabled, input:disabled {
     <label for="email">Email Address *</label>
     <input id="email" name="email" type="email" placeholder="you@example.com" required />
 
-    <label for="cellphone">Cellphone Number *</label>
-    <div style="display:flex; gap:10px;">
-      <select id="country_code" name="country_code" required>
-        <option value="+27">+27 (ZA)</option>
-        <option value="+44">+44 (UK)</option>
-        <option value="+61">+61 (AU)</option>
-        <option value="+1">+1 (US)</option>
-      </select>
-      <input id="cellphone" name="cellphone" type="tel" placeholder="123 456 7890" required />
-    </div>
+   <label for="cellphone">Cellphone Number *</label>
+<div style="display:flex; gap:10px;">
+  <select id="country_code" name="country_code" required>
+    <option value="+27">+27 (ZA)</option>
+    <option value="+268">+268 (SZ - Eswatini)</option>
+    <option value="+44">+44 (UK)</option>
+    <option value="+61">+61 (AU)</option>
+    <option value="+1">+1 (US)</option>
+  </select>
+  <input id="cellphone" name="cellphone" type="tel" placeholder="123 456 7890" required />
+</div>
+
 
     <!-- Country & Location -->
     <label for="country">Country *</label>
@@ -333,3 +335,4 @@ bookingForm.addEventListener("submit", function(e){
 </script>
 </body>
 </html>
+
